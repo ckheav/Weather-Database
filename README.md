@@ -1,5 +1,5 @@
 # Weather Database
-This weather database using MySQL workbench with real data collected from June 2019 to April 2020 for 15 different regions. While also using SQL to create and store queries as Views to compare data from each region. The data was collected and stored in CSV files.  
+This weather database was created using MySQL workbench with real data from the first and third week of every month between June 2019 to April 2020 for 15 different regions. While also using SQL to create and store queries as Views to compare data from each region. The data was collected and stored in CSV files.  
 
 # Instructions
 To view the weather database download and run weather_db_backup.sql in MySQL Workbench 8.0 
