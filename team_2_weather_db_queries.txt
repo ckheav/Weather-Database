@@ -1,0 +1,50 @@
+/*View 1 - A, B, C*/
+CREATE OR REPLACE VIEW celestial_tides
+AS
+SELECT moon_type AS "Moon Type", CONCAT(ROUND(AVG(high_tide_rise_height),2), " feet") AS "High Tide Rise Height"
+FROM celestial_phases JOIN sea_information USING (sea_info_id)
+GROUP BY moon_type
+ORDER BY AVG(high_tide_rise_height) DESC;
+
+/*View 2 - A,B */ 
+CREATE OR REPLACE VIEW temperature_comparison
+AS 
+SELECT state AS "States", date AS "Date", CONCAT(temperature, "°F") AS "Temperature"
+FROM weather_primary 
+JOIN regions USING (region_id)
+WHERE temperature > 75
+ORDER BY temperature DESC;
+
+/*View 3 - A,B,C,D,E */
+CREATE OR REPLACE VIEW state_averages 
+AS
+SELECT state AS "State", date AS "Date", CONCAT(temperature, "°F") AS "Temperature", 
+CONCAT(ROUND(AVG(dew_point),2), "%") AS "Dew Point AVG", 
+CONCAT(ROUND(AVG(p.precipitation_id),2), " in") AS "Precipitation AVG"
+FROM weather_primary 
+JOIN regions USING (region_id)
+JOIN weather_secondary ws USING (weather_secondary_id)
+JOIN weather_join_precipitation USING (weather_secondary_id)
+JOIN precipitation p USING (precipitation_id)
+WHERE temperature > (SELECT AVG(temperature) FROM weather_primary)
+GROUP BY state ORDER BY state;
+
+/*View 4 - A,B,C */
+CREATE OR REPLACE VIEW seasonal_weather
+AS 
+SELECT season_type AS "Season Type", CONCAT(ROUND(AVG(wind_speed),2), " MPH") AS "Wind Speed AVG", 
+CONCAT(ROUND(AVG(humidity),2), "%") AS "Humidity AVG",
+CONCAT(ROUND(AVG(temperature),2), "°F") AS "Temperature AVG"
+FROM weather_primary 
+JOIN seasons USING (season_id)
+WHERE wind_speed > 1
+GROUP BY season_type ORDER BY season_type;
+
+/*View 5 - A,B,C*/
+CREATE OR REPLACE VIEW region_comparison
+AS 
+SELECT CONCAT(ROUND(MAX(temperature),2), "°F") AS "Highest Temperature", city AS "City", state AS "State", zip_code AS "Zip Code"
+FROM weather_primary
+JOIN regions USING (region_id)
+GROUP BY state
+ORDER BY MAX(temperature) DESC, state;
