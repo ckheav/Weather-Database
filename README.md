@@ -4,6 +4,9 @@ This weather database using MySQL workbench with real data collected from June 2
 # Instructions
 To view the weather database download and run weather_db_backup.sql in MySQL Workbench 8.0 
 
+# Previews
+Located in the Tables Folder, screenshots of each table are given. To preview the design of the database, please explore the ERD folder and view the Entity Relationship Diagram.
+
 # Requirements
 - MySQL Workbench 8.0 CE
 
